@@ -1,0 +1,122 @@
+[
+    {
+      "professor": "Dr. Emily Wilkins",
+      "subject": "Introduction to Computer Science",
+      "stars": 4,
+      "review": "Dr. Wilkins is an excellent professor who really cares about her students. The course material is challenging but she explains it clearly and is always available to help."
+    },
+    {
+      "professor": "Professor Michael Chen",
+      "subject": "Organic Chemistry",
+      "stars": 3,
+      "review": "Professor Chen is knowledgeable, but his lectures can be dry and difficult to follow. The exams are very challenging and don't always align with the course content."
+    },
+    {
+      "professor": "Dr. Sarah Johnson",
+      "subject": "Introduction to Psychology",
+      "stars": 5,
+      "review": "Dr. Johnson is an engaging and enthusiastic professor. Her lectures are always interesting and she does a great job of making the material relevant and applicable to real life."
+    },
+    {
+      "professor": "Professor David Lee",
+      "subject": "Calculus I",
+      "stars": 2,
+      "review": "Professor Lee is not the best at explaining the concepts in Calculus. The homework and exams are extremely difficult and he doesn't provide much support or guidance."
+    },
+    {
+      "professor": "Dr. Olivia Patel",
+      "subject": "Intermediate Microeconomics",
+      "stars": 4,
+      "review": "Dr. Patel is a fair and knowledgeable professor. The course is challenging but she makes sure students understand the material before moving on."
+    },
+    {
+      "professor": "Professor Mark Thompson",
+      "subject": "Introduction to American History",
+      "stars": 3,
+      "review": "Professor Thompson's lectures can be dry and monotonous. He doesn't seem to engage the students very well, but the course material is interesting."
+    },
+    {
+      "professor": "Dr. Jessica Nguyen",
+      "subject": "Molecular Biology",
+      "stars": 5,
+      "review": "Dr. Nguyen is an incredibly knowledgeable and passionate professor. Her lectures are always engaging and she goes out of her way to help students succeed."
+    },
+    {
+      "professor": "Professor Robert Gomez",
+      "subject": "Fundamentals of Marketing",
+      "stars": 4,
+      "review": "Professor Gomez is a great instructor who brings real-world examples and case studies into the classroom. The course is challenging but very useful for understanding marketing principles."
+    },
+    {
+      "professor": "Dr. Sophia Martinez",
+      "subject": "Advanced Spanish Conversation",
+      "stars": 5,
+      "review": "Dr. Martinez is an excellent Spanish professor. She creates a comfortable and supportive environment for students to practice their conversational skills."
+    },
+    {
+      "professor": "Professor Andrew Goldstein",
+      "subject": "Introduction to Philosophy",
+      "stars": 3,
+      "review": "Professor Goldstein's lectures can be dry and difficult to follow. The course material is interesting, but he doesn't do a great job of engaging the students."
+    },
+    {
+      "professor": "Dr. Lila Patel",
+      "subject": "Developmental Psychology",
+      "stars": 4,
+      "review": "Dr. Patel is a knowledgeable and enthusiastic professor. Her lectures are always thought-provoking and she encourages class discussions."
+    },
+    {
+      "professor": "Professor Aisha Khan",
+      "subject": "Principles of Accounting",
+      "stars": 4,
+      "review": "Professor Khan is a clear and organized instructor. The course can be challenging, but she provides helpful examples and resources to support student learning."
+    },
+    {
+      "professor": "Dr. Ethan Nguyen",
+      "subject": "International Relations",
+      "stars": 5,
+      "review": "Dr. Nguyen is an exceptional professor who brings a wealth of real-world experience to the classroom. His lectures are engaging and he encourages critical thinking."
+    },
+    {
+      "professor": "Professor Emma Gonzalez",
+      "subject": "Intro to Sociology",
+      "stars": 3,
+      "review": "Professor Gonzalez's lectures can be dry and she doesn't always connect the course material to real-world examples. The exams are challenging and don't always reflect the course content."
+    },
+    {
+      "professor": "Dr. Christopher Lee",
+      "subject": "Organic Chemistry II",
+      "stars": 4,
+      "review": "Dr. Lee is a knowledgeable and patient professor. The course is challenging, but he provides clear explanations and is always available to help students."
+    },
+    {
+      "professor": "Professor Samantha Patel",
+      "subject": "Introduction to Graphic Design",
+      "stars": 5,
+      "review": "Professor Patel is an amazing instructor who really cares about her students. Her lectures are engaging and she provides valuable feedback on assignments."
+    },
+    {
+      "professor": "Dr. Liam Nguyen",
+      "subject": "Intermediate Microeconomics",
+      "stars": 4,
+      "review": "Dr. Nguyen is a knowledgeable and fair professor. The course material is challenging but he makes sure students understand the concepts before moving on."
+    },
+    {
+      "professor": "Professor Isabella Hernandez",
+      "subject": "Introduction to Creative Writing",
+      "stars": 5,
+      "review": "Professor Hernandez is an inspiring and supportive instructor. She provides valuable feedback and encouragement to help students develop their writing skills."
+    },
+    {
+      "professor": "Dr. Alexander Patel",
+      "subject": "Molecular Genetics",
+      "stars": 4,
+      "review": "Dr. Patel is a knowledgeable and organized professor. The course material is challenging but he explains complex concepts clearly and provides relevant examples."
+    },
+    {
+      "professor": "Professor Mia Gonzalez",
+      "subject": "Principles of Marketing",
+      "stars": 3,
+      "review": "Professor Gonzalez's lectures can be dry and she doesn't always relate the course material to real-world applications. The exams are difficult and don't always align with the course content."
+    }
+  ]
