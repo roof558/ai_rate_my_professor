@@ -1,4 +1,5 @@
-[
+{
+  "reviews":[
     {
       "professor": "Dr. Emily Wilkins",
       "subject": "Introduction to Computer Science",
@@ -120,3 +121,4 @@
       "review": "Professor Gonzalez's lectures can be dry and she doesn't always relate the course material to real-world applications. The exams are difficult and don't always align with the course content."
     }
   ]
+}
