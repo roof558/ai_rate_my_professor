@@ -14,6 +14,11 @@ export default function Home() {
   const [message, setMessage] = useState("")
   const [url, setUrl] = useState("")
 
+  const isValidRateMyProfessorURL = (url) => {
+    const regex = /https?:\/\/www\.ratemyprofessors\.com\/professor\/\d+/
+    return regex.test(url)
+  }
+
   const sendMessage = async () => {
     setMessages((messages) => [
       ...messages,
@@ -52,7 +57,31 @@ export default function Home() {
     })
   }
 
-  const sendURL = async () => {}
+  const sendURL = async () => {
+    if (isValidRateMyProfessorURL(url)) {
+      try {
+        const response = await fetch("/api/submit-url", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url }),
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          alert(`Error: ${errorData.error}`)
+        } else {
+          alert("URL submitted successfully")
+        }
+      } catch (error) {
+        alert(`An unexpected error occurred: ${error.message}`)
+      }
+    } else {
+      alert("Invalid URL")
+    }
+    setUrl("")
+  }
 
   return (
     <Box
