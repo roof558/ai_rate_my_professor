@@ -1,55 +1,59 @@
-'use client'
-import { Box, Button, Stack, TextField } from "@mui/material";
-import Image from "next/image";
-import { useState } from "react";
+"use client"
+import { Box, Button, Stack, TextField, Typography } from "@mui/material"
+import { useState } from "react"
 
 export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: "Hi! I'm the Rate My Professor support assistant. How can I help you today?"
-    }
+      content:
+        "Hi! I'm the Rate My Professor support assistant. How can I help you today?",
+    },
   ])
 
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState("")
+  const [url, setUrl] = useState("")
+
   const sendMessage = async () => {
     setMessages((messages) => [
       ...messages,
-      {role: "user", content: message},
-      {role: "assistant", content: ''},
+      { role: "user", content: message },
+      { role: "assistant", content: "" },
     ])
-    
-    setMessage('')
-    const response = fetch('/api/chat', {
+
+    setMessage("")
+    const response = fetch("/api/chat", {
       method: "POST",
       headers: {
-        'Content-Type': 'application.json'
+        "Content-Type": "application.json",
       },
-      body: JSON.stringify([...messages, {role: "user", content: message}])
-    }).then(async(res) => {
+      body: JSON.stringify([...messages, { role: "user", content: message }]),
+    }).then(async (res) => {
       const reader = res.body.getReader()
-      const decoder = new TextDecoder
+      const decoder = new TextDecoder()
 
-      let result = ''
-      return reader.read().then(function processText({done, value}){
+      let result = ""
+      return reader.read().then(function processText({ done, value }) {
         if (done) {
           return result
         }
-        const text = decoder.decode(value || new Uint8Array(), {stream: true})
+        const text = decoder.decode(value || new Uint8Array(), { stream: true })
         setMessages((messages) => {
           let lastMessage = messages[messages.length - 1]
           let otherMessages = messages.slice(0, messages.length - 1)
           return [
             ...otherMessages,
-            {...lastMessage, content: lastMessage.content + text},
+            { ...lastMessage, content: lastMessage.content + text },
           ]
         })
 
         return reader.read().then(processText)
       })
     })
-    
   }
+
+  const sendURL = async () => {}
+
   return (
     <Box
       width={"100vw"}
@@ -59,10 +63,11 @@ export default function Home() {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      <Stack 
+      <Stack
         direction={"column"}
-        width={"500px"} height={"700px"}
-        border={"1px solid black"} 
+        width={"500px"}
+        height={"700px"}
+        border={"1px solid black"}
         p={2}
         spacing={3}
       >
@@ -71,20 +76,21 @@ export default function Home() {
           spacing={2}
           flexGrow={1}
           overflow={"auto"}
-          maxHeight={'100%'}
+          maxHeight={"100%"}
         >
-        {
-          messages.map((message, index) => (
+          {messages.map((message, index) => (
             <Box
               key={index}
               display={"flex"}
               justifyContent={
-                message.role === 'assistant' ? 'flex-start' : 'flex-end'
+                message.role === "assistant" ? "flex-start" : "flex-end"
               }
             >
               <Box
                 bgcolor={
-                  message.role === 'assistant' ? 'primary.main': 'secondary.main'
+                  message.role === "assistant"
+                    ? "primary.main"
+                    : "secondary.main"
                 }
                 color={"white"}
                 borderRadius={16}
@@ -93,27 +99,38 @@ export default function Home() {
                 {message.content}
               </Box>
             </Box>
-          ))
-        }
+          ))}
         </Stack>
-        <Stack
-          direction={"row"} spacing={2}>
+        <Stack direction={"row"} spacing={2}>
           <TextField
-            label = "Message"
+            label="Message"
             fullWidth
             value={message}
             onChange={(e) => {
               setMessage(e.target.value)
-            }}/>
-          <Button
-            variant="contained"
-            onClick={sendMessage}
-          >
+            }}
+          />
+          <Button variant="contained" onClick={sendMessage}>
             Send
+          </Button>
+        </Stack>
+        <Typography>
+          Submit link of Rate My Professor to update in our database:
+        </Typography>
+        <Stack direction={"row"} spacing={2}>
+          <TextField
+            label="URL"
+            fullWidth
+            value={url}
+            onChange={(e) => {
+              setUrl(e.target.value)
+            }}
+          />
+          <Button variant="contained" onClick={sendURL}>
+            Submit
           </Button>
         </Stack>
       </Stack>
     </Box>
   )
 }
-
