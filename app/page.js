@@ -68,6 +68,8 @@ export default function Home() {
           body: JSON.stringify({ url }),
         })
 
+        // console.log(url)
+
         if (!response.ok) {
           const errorData = await response.json()
           alert(`Error: ${errorData.error}`)
