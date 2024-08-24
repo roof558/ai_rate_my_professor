@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server"
 import { Pinecone } from "@pinecone-database/pinecone"
 import OpenAI from "openai"
-import fetch from "node-fetch"
+// import fetch from "node-fetch"
 import * as cheerio from "cheerio"
 
+// globalThis.fetch = fetch
+
 export async function POST(req) {
-  console.log("POST request received")
+  // console.log("POST request received")
   const { url } = await req.json()
 
   const response = await fetch(url)
@@ -15,7 +17,7 @@ export async function POST(req) {
   const metaContent = $('meta[name="title"]').attr("content")
 
   const professor = metaContent.split(" at ")[0]
-  console.log("Professor:", professor)
+  // console.log("Professor:", professor)
 
   const review = $(".Comments__StyledComments-dzzyvm-0.gRjWel").text().trim()
   // console.log("Review: ", review)
@@ -26,6 +28,10 @@ export async function POST(req) {
   const stars = $(".RatingValue__Numerator-qw8sqy-2.liyUjw").text().trim()
   // console.log("Star: ", stars)
 
+  if (!review || !subject || !stars) {
+    throw new Error("Failed to extract some data from the page")
+  }
+
   const openai = new OpenAI()
   const embeddingResponse = await openai.embeddings.create({
     model: "text-embedding-3-small",
@@ -35,17 +41,16 @@ export async function POST(req) {
   const embedding = embeddingResponse.data[0].embedding
 
   const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY })
+  // pc = Pinecone((api_key = os.getenv("PINECONE_API_KEY")))
   const index = pc.index("rag").namespace("ns1")
 
-  await index.upsert({
-    vectors: [
-      {
-        values: embedding,
-        id: professor,
-        metadata: { review, subject, stars },
-      },
-    ],
-  })
+  await index.upsert([
+    {
+      values: embedding,
+      id: professor,
+      metadata: { review, subject, stars },
+    },
+  ])
 
   return NextResponse.json({ success: true })
 }

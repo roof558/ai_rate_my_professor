@@ -20,41 +20,61 @@ export default function Home() {
   }
 
   const sendMessage = async () => {
-    setMessages((messages) => [
-      ...messages,
-      { role: "user", content: message },
+    if (message.trim() === "") return; // Prevent sending empty messages
+
+    const newMessage = { role: "user", content: message }
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      newMessage,
       { role: "assistant", content: "" },
     ])
 
     setMessage("")
-    const response = fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application.json",
-      },
-      body: JSON.stringify([...messages, { role: "user", content: message }]),
-    }).then(async (res) => {
-      const reader = res.body.getReader()
-      const decoder = new TextDecoder()
 
-      let result = ""
-      return reader.read().then(function processText({ done, value }) {
-        if (done) {
-          return result
-        }
-        const text = decoder.decode(value || new Uint8Array(), { stream: true })
-        setMessages((messages) => {
-          let lastMessage = messages[messages.length - 1]
-          let otherMessages = messages.slice(0, messages.length - 1)
-          return [
-            ...otherMessages,
-            { ...lastMessage, content: lastMessage.content + text },
-          ]
-        })
-
-        return reader.read().then(processText)
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([...messages, newMessage]),
       })
-    })
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let result = ""
+
+      const processText = async ({ done, value }) => {
+        if (done) {
+          setMessages((prevMessages) => {
+            const updatedMessages = [...prevMessages]
+            updatedMessages[updatedMessages.length - 1] = {
+              ...updatedMessages[updatedMessages.length - 1],
+              content: result,
+            }
+            return updatedMessages
+          })
+          return
+        }
+        result += decoder.decode(value, { stream: true })
+        setMessages((prevMessages) => {
+          const updatedMessages = [...prevMessages]
+          updatedMessages[updatedMessages.length - 1] = {
+            ...updatedMessages[updatedMessages.length - 1],
+            content: result,
+          }
+          return updatedMessages
+        })
+        return reader.read().then(processText)
+      }
+      await reader.read().then(processText)
+    } catch (error) {
+      console.error("Failed to fetch response:", error)
+    }
   }
 
   const sendURL = async () => {
@@ -67,8 +87,6 @@ export default function Home() {
           },
           body: JSON.stringify({ url }),
         })
-
-        // console.log(url)
 
         if (!response.ok) {
           const errorData = await response.json()
@@ -93,21 +111,24 @@ export default function Home() {
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"center"}
+      p={2}
     >
       <Stack
         direction={"column"}
         width={"500px"}
         height={"700px"}
-        border={"1px solid black"}
+        border={"1px solid #ccc"}
+        borderRadius={2}
         p={2}
-        spacing={3}
+        spacing={2}
+        bgcolor={"background.paper"}
+        boxShadow={3}
       >
         <Stack
           direction={"column"}
           spacing={2}
           flexGrow={1}
           overflow={"auto"}
-          maxHeight={"100%"}
         >
           {messages.map((message, index) => (
             <Box
@@ -124,40 +145,40 @@ export default function Home() {
                     : "secondary.main"
                 }
                 color={"white"}
-                borderRadius={16}
-                p={3}
+                borderRadius={2}
+                p={2}
+                maxWidth={"75%"}
+                boxShadow={1}
               >
-                {message.content}
+                <Typography variant="body1">{message.content}</Typography>
               </Box>
             </Box>
           ))}
         </Stack>
-        <Stack direction={"row"} spacing={2}>
+        <Stack direction={"row"} spacing={2} mt={2}>
           <TextField
             label="Message"
             fullWidth
             value={message}
-            onChange={(e) => {
-              setMessage(e.target.value)
-            }}
+            onChange={(e) => setMessage(e.target.value)}
+            variant="outlined"
           />
-          <Button variant="contained" onClick={sendMessage}>
+          <Button variant="contained" color="primary" onClick={sendMessage}>
             Send
           </Button>
         </Stack>
-        <Typography>
-          Submit link of Rate My Professor to update in our database:
+        <Typography mt={2}>
+          Submit the link of Rate My Professor to update our database:
         </Typography>
-        <Stack direction={"row"} spacing={2}>
+        <Stack direction={"row"} spacing={2} mt={2}>
           <TextField
             label="URL"
             fullWidth
             value={url}
-            onChange={(e) => {
-              setUrl(e.target.value)
-            }}
+            onChange={(e) => setUrl(e.target.value)}
+            variant="outlined"
           />
-          <Button variant="contained" onClick={sendURL}>
+          <Button variant="contained" color="secondary" onClick={sendURL}>
             Submit
           </Button>
         </Stack>
