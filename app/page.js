@@ -1,6 +1,7 @@
 "use client"
 import { Box, Button, Stack, TextField, Typography } from "@mui/material"
 import { useState } from "react"
+import ReactMarkdown from "react-markdown"
 
 export default function Home() {
   const [messages, setMessages] = useState([
@@ -20,7 +21,7 @@ export default function Home() {
   }
 
   const sendMessage = async () => {
-    if (message.trim() === "") return; // Prevent sending empty messages
+    if (message.trim() === "") return // Prevent sending empty messages
 
     const newMessage = { role: "user", content: message }
     setMessages((prevMessages) => [
@@ -41,7 +42,7 @@ export default function Home() {
       })
 
       if (!response.ok) {
-        throw new Error('Network response was not ok')
+        throw new Error("Network response was not ok")
       }
 
       const reader = response.body.getReader()
@@ -124,12 +125,7 @@ export default function Home() {
         bgcolor={"background.paper"}
         boxShadow={3}
       >
-        <Stack
-          direction={"column"}
-          spacing={2}
-          flexGrow={1}
-          overflow={"auto"}
-        >
+        <Stack direction={"column"} spacing={2} flexGrow={1} overflow={"auto"}>
           {messages.map((message, index) => (
             <Box
               key={index}
@@ -150,7 +146,7 @@ export default function Home() {
                 maxWidth={"75%"}
                 boxShadow={1}
               >
-                <Typography variant="body1">{message.content}</Typography>
+                <ReactMarkdown allowHtml>{message.content}</ReactMarkdown>
               </Box>
             </Box>
           ))}
