@@ -39,6 +39,11 @@ export default function Home() {
   const [starRating, setStarRating] = useState(0)
   const [containerHeight, setContainerHeight] = useState("70vh")
 
+  const isValidRateMyProfessorURL = (url) => {
+    const regex = /https?:\/\/www\.ratemyprofessors\.com\/professor\/\d+/
+    return regex.test(url)
+  }
+
   const scrollToBottom = () => {
     chatBoxRef.current?.scrollIntoView({ behavior: "smooth" })
   }
@@ -62,7 +67,6 @@ export default function Home() {
     ])
     setMessage("")
     setIsLoading(true)
-
 
     try {
       const response = await fetch("/api/chat", {
@@ -192,7 +196,6 @@ export default function Home() {
             borderRadius: 4,
             transition: "all 0.3s ease-in-out",
           }}
-          
         >
           <Box
             sx={{
@@ -220,9 +223,8 @@ export default function Home() {
                   },
                   animationDelay: `${index * 0.1}s`,
                   maxWidth: "800px",
-                  maxHeight: "10000px"
+                  maxHeight: "10000px",
                 }}
-                
               >
                 <Paper
                   elevation={1}
@@ -273,7 +275,7 @@ export default function Home() {
                 </Paper>
               </Box>
             ))}
-            
+
             {/* <div ref={messagesEndRef} /> */}
           </Box>
           <Box sx={{ p: 2, backgroundColor: "#fff" }}>
